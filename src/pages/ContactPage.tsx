@@ -111,7 +111,7 @@ export default function ContactPage() {
 
   return (
     <EditorialChrome page="contact">
-      <section className="form-hero">
+      <section className="form-hero form-hero-contact">
         <div>
           <p className="story-eyebrow">Contact</p>
           <h1 className="form-hero-title">
@@ -123,9 +123,6 @@ export default function ContactPage() {
             We can probably help with the first two.
           </p>
         </div>
-        <p className="form-hero-aside" aria-hidden="true">
-          ?
-        </p>
       </section>
 
       <section className="form-panel">

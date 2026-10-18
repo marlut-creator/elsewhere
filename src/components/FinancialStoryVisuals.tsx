@@ -1,12 +1,23 @@
 import { EDITORIAL_ASSETS } from "../data/editorialAssets";
-import { BRAND_GROUPS, LOBBYING_YEARS } from "../data/editorialResearch";
+import {
+  BRAND_GROUPS,
+  CPG_LOBBYING_2024,
+  CPG_LOBBYING_TOTAL_2024,
+} from "../data/editorialResearch";
 
 const DIVIDENDS_B = 9.9;
 const BUYBACKS_B = 6.5;
 const TOTAL_RETURNED_B = DIVIDENDS_B + BUYBACKS_B;
 const DIVIDEND_SHARE = (DIVIDENDS_B / TOTAL_RETURNED_B) * 100;
 const BUYBACK_SHARE = (BUYBACKS_B / TOTAL_RETURNED_B) * 100;
-const LOBBY_CAP_B = 5;
+const LOBBY_CAP = CPG_LOBBYING_2024[0].amount;
+
+function formatDollars(amount: number) {
+  if (amount >= 1_000_000) {
+    return `$${(amount / 1_000_000).toFixed(amount % 1_000_000 === 0 ? 1 : 2).replace(/\.00$/, "")}M`;
+  }
+  return `$${(amount / 1_000).toFixed(0)}K`;
+}
 
 function formatShare(value: number) {
   return `${value.toFixed(1)}%`;
@@ -114,7 +125,7 @@ export function LobbyingVisual() {
   return (
     <figure
       className="fin-visual fin-visual-lobby"
-      aria-label="Federal lobbying totals from 2022 to 2024, axis starting at zero"
+      aria-label="2024 federal lobbying by a selected set of grocery and household parent companies"
     >
       <div className="fin-photo-stage fin-photo-stage-stat">
         <img
@@ -122,42 +133,33 @@ export function LobbyingVisual() {
           alt={EDITORIAL_ASSETS.capitolWestFront.alt}
         />
         <div className="fin-photo-stat">
-          <p className="fin-visual-hero">$4.4B</p>
+          <p className="fin-visual-hero">
+            ${(CPG_LOBBYING_TOTAL_2024 / 1_000_000).toFixed(1)}M
+          </p>
           <p className="fin-visual-hero-label">
-            Federal lobbying in 2024 · all filers
+            2024 lobbying · ten grocery and household parents
           </p>
         </div>
       </div>
       <div className="fin-panel-card">
         <p className="fin-visual-kicker">
-          OpenSecrets annual totals · scale $0 to $5B
+          OpenSecrets parent-client totals · not all filers
         </p>
-        <div className="fin-lobby-chart">
-          <div className="fin-lobby-axis" aria-hidden="true">
-            <span>$5B</span>
-            <span>$2.5B</span>
-            <span>$0</span>
-          </div>
-          <div className="fin-columns">
-            {LOBBYING_YEARS.map((row) => {
-              const billions = Number(row.amount.replace(/[^0-9.]/g, ""));
-              const height = (billions / LOBBY_CAP_B) * 100;
-              return (
-                <div key={row.year} className="fin-column">
-                  <strong>{row.amount}</strong>
-                  <div className="fin-column-track">
-                    <div style={{ height: `${height}%` }} />
-                  </div>
-                  <span>{row.year}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <ul className="fin-lobby-list">
+          {CPG_LOBBYING_2024.slice(0, 5).map((row) => (
+            <li key={row.parent}>
+              <span>{row.parent}</span>
+              <strong>{formatDollars(row.amount)}</strong>
+              <span
+                className="fin-lobby-meter"
+                style={{ width: `${(row.amount / LOBBY_CAP) * 100}%` }}
+              />
+            </li>
+          ))}
+        </ul>
         <p className="fin-visual-caption">
-          Axis runs from $0 to $5B. Totals cover every organization that filed,
-          not companies alone. Photograph: {EDITORIAL_ASSETS.capitolWestFront.credit}{" "}
-          (public domain).
+          Five of ten selected companies shown here. Photograph:{" "}
+          {EDITORIAL_ASSETS.capitolWestFront.credit} (public domain).
         </p>
       </div>
     </figure>

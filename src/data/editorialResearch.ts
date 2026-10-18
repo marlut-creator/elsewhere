@@ -9,11 +9,6 @@ export type BrandGroup = {
   sourceUrl: string;
 };
 
-export type YearAmount = {
-  year: string;
-  amount: string;
-};
-
 export type FinancialStory = {
   id: string;
   step: string;
@@ -64,29 +59,74 @@ export const IMPACT_BRAND_GROUPS: BrandGroup[] = [
     parent: "Procter & Gamble",
     brands: [
       "Tide",
+      "Gain",
       "Crest",
+      "Oral-B",
       "Gillette",
       "Pampers",
       "Olay",
       "Head & Shoulders",
+      "Pantene",
       "Dawn",
+      "Cascade",
       "Bounty",
+      "Charmin",
+      "Always",
+      "Old Spice",
+      "Febreze",
     ],
     sourceUrl: "https://us.pg.com/brands/",
   },
   {
     parent: "Unilever",
-    brands: ["Dove", "Hellmann's", "Knorr", "Vaseline", "Axe"],
+    brands: [
+      "Dove",
+      "Hellmann's",
+      "Knorr",
+      "Vaseline",
+      "Axe",
+      "Degree",
+      "Suave",
+      "TRESemmé",
+      "Seventh Generation",
+      "SheaMoisture",
+      "Pond's",
+    ],
     sourceUrl: "https://www.unilever.com/brands/all-brands/",
   },
   {
     parent: "Nestlé",
-    brands: ["Nescafé", "KitKat", "Purina", "Gerber", "Nespresso", "Stouffer's"],
+    brands: [
+      "Nescafé",
+      "Nespresso",
+      "KitKat",
+      "Purina",
+      "Gerber",
+      "Stouffer's",
+      "Coffee-mate",
+      "Lean Cuisine",
+      "DiGiorno",
+      "Toll House",
+      "Maggi",
+      "Carnation",
+    ],
     sourceUrl: "https://www.nestle.com/brands/brandssearchlist",
   },
   {
     parent: "PepsiCo",
-    brands: ["Pepsi", "Lay's", "Gatorade", "Doritos", "Quaker", "Cheetos", "Tostitos"],
+    brands: [
+      "Pepsi",
+      "Mountain Dew",
+      "Gatorade",
+      "Lay's",
+      "Doritos",
+      "Cheetos",
+      "Tostitos",
+      "Fritos",
+      "Ruffles",
+      "Quaker",
+      "Cap'n Crunch",
+    ],
     sourceUrl: "https://www.pepsico.com/brands",
   },
 ];
@@ -108,46 +148,86 @@ export const IMPACT_EVIDENCE: ImpactEvidenceStat[] = [
     id: "laundry-concentration",
     kicker: "U.S. liquid laundry detergent",
     statistic: "55%+",
-    label: "Tide and Gain dollar share",
+    label: "Tide and Gain dollar share, both P&G",
     explanation:
-      "Circana OmniMarket figures reported by Happi put Tide and Gain, both P&G brands, at more than 55% of U.S. liquid laundry detergent dollar sales in the 52 weeks ended November 3, 2024. Two labels, one parent, more than half the category money.",
+      "Circana OmniMarket figures reported by Happi put Tide and Gain, both Procter & Gamble brands, at more than 55% of U.S. liquid laundry detergent dollar sales in the 52 weeks ended November 3, 2024. That is dollar share, not unit share: more than half the category money, two labels, one parent.",
     reportingPeriod: "52 weeks ended November 3, 2024",
     sourceName: "Happi, citing Circana OmniMarket",
     sourceTitle: "Convenience & Sustainability",
     sourceUrl: "https://www.happi.com/convenience-sustainability/",
   },
+];
+
+export type CpgLobbyingRow = {
+  parent: string;
+  amount: number;
+  sourceUrl: string;
+};
+
+/** 2024 OpenSecrets parent-client totals for a selected set of grocery and household companies. Not a ranking. */
+export const CPG_LOBBYING_2024: CpgLobbyingRow[] = [
   {
-    id: "bombas-donations",
-    kicker: "Company-reported giving",
-    statistic: "200M+",
-    label: "Items Bombas says it has donated",
-    explanation:
-      "Bombas publishes a running total of clothing items donated through its purchase-one-give-one model. The company headlines more than 200 million items; its public counter listed 204,002,196 as of February 28, 2026. That is Bombas's record, not an Elsewhere result.",
-    reportingPeriod: "As of February 28, 2026",
-    sourceName: "Bombas",
-    sourceTitle: "Bee Better impact counter",
-    sourceUrl: "https://beebetter.bombas.com/impact",
+    parent: "Coca-Cola",
+    amount: 4_930_000,
+    sourceUrl:
+      "https://www.opensecrets.org/federal-lobbying/clients/summary?cycle=2024&id=D000000212",
   },
   {
-    id: "bwb-books",
-    kicker: "Company-reported giving",
-    statistic: "38M+",
-    label: "Books Better World Books says it has donated",
-    explanation:
-      "Better World Books reports donating more than 38 million books and generating more than $35 million for literacy programs. The figures describe that company's published outcomes, not purchases made through this site.",
-    reportingPeriod: "Company mission page, reviewed 2026-10-17",
-    sourceName: "Better World Books",
-    sourceTitle: "Our Mission",
-    sourceUrl: "https://www.betterworldbooks.com/go/mission",
+    parent: "PepsiCo",
+    amount: 3_920_000,
+    sourceUrl: "https://www.opensecrets.org/orgs/pepsico-inc/summary?cycle=A&id=D000000200",
+  },
+  {
+    parent: "Procter & Gamble",
+    amount: 2_790_000,
+    sourceUrl: "https://www.opensecrets.org/orgs/summary?id=D000000485",
+  },
+  {
+    parent: "Mars",
+    amount: 2_000_000,
+    sourceUrl: "https://www.opensecrets.org/orgs/summary?cycle=A&id=D000042123",
+  },
+  {
+    parent: "General Mills",
+    amount: 1_270_000,
+    sourceUrl:
+      "https://www.opensecrets.org/federal-lobbying/industries/summary?cycle=2024&id=A09",
+  },
+  {
+    parent: "Kellanova",
+    amount: 1_070_000,
+    sourceUrl:
+      "https://www.opensecrets.org/federal-lobbying/industries/summary?cycle=2024&id=A09",
+  },
+  {
+    parent: "Nestlé",
+    amount: 1_014_763,
+    sourceUrl:
+      "https://www.opensecrets.org/federal-lobbying/industries/summary?cycle=2024&id=A09",
+  },
+  {
+    parent: "Kraft Heinz",
+    amount: 880_000,
+    sourceUrl: "https://www.opensecrets.org/orgs/kraft-heinz-co/summary?id=D000067808",
+  },
+  {
+    parent: "Mondelez",
+    amount: 850_000,
+    sourceUrl:
+      "https://www.opensecrets.org/federal-lobbying/industries/summary?cycle=2024&id=A09",
+  },
+  {
+    parent: "Unilever",
+    amount: 765_000,
+    sourceUrl:
+      "https://www.opensecrets.org/federal-lobbying/clients/summary?cycle=2024&id=D000030608",
   },
 ];
 
-/** OpenSecrets published table, rounded in their 2024 news analysis to $4.4B. */
-export const LOBBYING_YEARS: YearAmount[] = [
-  { year: "2022", amount: "$4.11B" },
-  { year: "2023", amount: "$4.27B" },
-  { year: "2024", amount: "$4.45B" },
-];
+export const CPG_LOBBYING_TOTAL_2024 = CPG_LOBBYING_2024.reduce(
+  (sum, row) => sum + row.amount,
+  0,
+);
 
 export const FINANCIAL_STORIES: FinancialStory[] = [
   {
@@ -189,19 +269,18 @@ export const FINANCIAL_STORIES: FinancialStory[] = [
   {
     id: "lobbying",
     step: "03 / 03",
-    statistic: "$4.4B",
-    headline: "The price of influence.",
+    statistic: "$19.5M",
+    headline: "Paid advocacy from the aisle.",
     paragraphs: [
-      "In 2024, corporations, trade associations, unions, and other organizations spent approximately $4.4 billion on federal lobbying in the United States.",
-      "Lobbying is paid advocacy about laws and rules. It is not campaign contributions, and the total does not show that any one bill passed because of it.",
+      "In 2024, ten grocery and household parent companies reported about $19.5 million in U.S. federal lobbying, according to OpenSecrets parent-client totals.",
+      "Lobbying is paid advocacy about laws and rules. It is not campaign money, and the total is a selected set of companies, not every filer in Washington.",
     ],
     reportingPeriod: "Calendar year 2024",
     sourceName: "OpenSecrets",
-    sourceTitle: "Federal lobbying set a new record in 2024",
-    sourceUrl:
-      "https://www.opensecrets.org/news/2025/02/federal-lobbying-set-new-record-in-2024/",
+    sourceTitle: "Parent-company lobbying profiles",
+    sourceUrl: "https://www.opensecrets.org/federal-lobbying",
     methodologyNote:
-      "OpenSecrets’ February 2025 analysis describes a record $4.4 billion for 2024, summed from quarterly LD-2 lobbying disclosures. Their detailed table lists $4.45 billion for 2024, $4.27 billion for 2023, and $4.11 billion for 2022. The figure covers all filing organizations, not corporations alone.",
+      "Sum of 2024 OpenSecrets parent-client totals for Coca-Cola, PepsiCo, Procter & Gamble, Mars, General Mills, Kellanova, Nestlé, Kraft Heinz, Mondelez, and Unilever (including Unilever US). This is a selected set, not a ranking, and not the all-filer $4.45 billion figure.",
     lastVerifiedAt: "2026-10-17",
     visual: "lobbying",
   },

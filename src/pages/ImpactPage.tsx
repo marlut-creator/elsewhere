@@ -1,68 +1,81 @@
 import EditorialChrome from "../components/EditorialChrome";
+import EditorialIllustration from "../components/EditorialIllustration";
 import ImpactSwapCarousel from "../components/ImpactSwapCarousel";
 import OwnershipNetwork from "../components/OwnershipNetwork";
 import { EDITORIAL_ASSETS } from "../data/editorialAssets";
 import {
+  CPG_LOBBYING_2024,
+  CPG_LOBBYING_TOTAL_2024,
   FINANCIAL_STORIES,
   IMPACT_EVIDENCE,
-  LOBBYING_YEARS,
 } from "../data/editorialResearch";
+import { SITE_IMAGES } from "../data/siteImages";
 
 const DIVIDENDS_B = 9.9;
 const BUYBACKS_B = 6.5;
 const TOTAL_RETURNED_B = DIVIDENDS_B + BUYBACKS_B;
 const DIVIDEND_SHARE = (DIVIDENDS_B / TOTAL_RETURNED_B) * 100;
 const BUYBACK_SHARE = (BUYBACKS_B / TOTAL_RETURNED_B) * 100;
-const LOBBY_CAP_B = 5;
+const LOBBY_CAP = CPG_LOBBYING_2024[0].amount;
 
 const shareholder = FINANCIAL_STORIES[0];
 const lobbying = FINANCIAL_STORIES[2];
-const [laundryStat, bombasStat, booksStat] = IMPACT_EVIDENCE;
+const laundryStat = IMPACT_EVIDENCE[0];
+
+const RECEIPT_LINES = [
+  { item: "Detergent", price: 12.99 },
+  { item: "Toothpaste", price: 6.49 },
+  { item: "Coffee", price: 9.99 },
+  { item: "Paper goods", price: 8.29 },
+  { item: "Snacks", price: 4.79 },
+];
+const RECEIPT_TOTAL = RECEIPT_LINES.reduce((sum, row) => sum + row.price, 0);
 
 function formatShare(value: number) {
   return `${value.toFixed(1)}%`;
 }
 
-function lobbyBillions(amount: string) {
-  return Number(amount.replace(/[^0-9.]/g, ""));
+function formatMoney(value: number) {
+  return `$${value.toFixed(2)}`;
+}
+
+function formatLobby(amount: number) {
+  if (amount >= 1_000_000) {
+    return `$${(amount / 1_000_000).toFixed(2).replace(/0+$/, "").replace(/\.$/, "")}M`;
+  }
+  return `$${(amount / 1_000).toFixed(0)}K`;
 }
 
 function ImpactHeroVisual() {
   return (
-    <figure className="ip-hero-collage">
-      <svg viewBox="0 0 520 420" role="img" aria-label="Everyday household products and a grocery receipt, suggesting that ordinary purchases feed much larger businesses">
-        <rect width="520" height="420" rx="16" fill="#f1eee7" />
-        <rect x="28" y="36" width="176" height="300" rx="8" fill="#fff" stroke="#321b36" />
-        <text x="44" y="68" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="18" fontWeight="600">GROCERY</text>
-        <text x="44" y="92" fill="#736675" fontFamily="Nunito Sans, sans-serif" fontSize="11">Register 04 · 18:42</text>
-        <path d="M44 108h144" stroke="#d3ccd1" />
-        <text x="44" y="132" fill="#321b36" fontFamily="Nunito Sans, sans-serif" fontSize="13">Detergent</text>
-        <text x="148" y="132" fill="#321b36" fontFamily="Nunito Sans, sans-serif" fontSize="13">12.99</text>
-        <text x="44" y="156" fill="#321b36" fontFamily="Nunito Sans, sans-serif" fontSize="13">Toothpaste</text>
-        <text x="148" y="156" fill="#321b36" fontFamily="Nunito Sans, sans-serif" fontSize="13">6.49</text>
-        <text x="44" y="180" fill="#321b36" fontFamily="Nunito Sans, sans-serif" fontSize="13">Coffee</text>
-        <text x="148" y="180" fill="#321b36" fontFamily="Nunito Sans, sans-serif" fontSize="13">9.99</text>
-        <text x="44" y="204" fill="#321b36" fontFamily="Nunito Sans, sans-serif" fontSize="13">Paper goods</text>
-        <text x="148" y="204" fill="#321b36" fontFamily="Nunito Sans, sans-serif" fontSize="13">8.29</text>
-        <text x="44" y="228" fill="#321b36" fontFamily="Nunito Sans, sans-serif" fontSize="13">Snacks</text>
-        <text x="148" y="228" fill="#321b36" fontFamily="Nunito Sans, sans-serif" fontSize="13">4.79</text>
-        <path d="M44 244h144" stroke="#d3ccd1" />
-        <text x="44" y="272" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="16" fontWeight="600">TOTAL</text>
-        <text x="136" y="272" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="16" fontWeight="600">42.55</text>
-        <text x="44" y="304" fill="#6679cc" fontFamily="Nunito Sans, sans-serif" fontSize="11">Owner not printed.</text>
-        <rect x="228" y="48" width="92" height="150" rx="10" fill="#fff" stroke="#321b36" />
-        <rect x="240" y="64" width="68" height="42" rx="4" fill="#6679cc" />
-        <text x="248" y="90" fill="#f7f3e8" fontFamily="Dosis, sans-serif" fontSize="13" fontWeight="600">soap</text>
-        <rect x="336" y="28" width="148" height="168" rx="10" fill="#fff" stroke="#321b36" />
-        <rect x="356" y="48" width="108" height="52" rx="4" fill="#321b36" />
-        <text x="368" y="80" fill="#eeedf8" fontFamily="Dosis, sans-serif" fontSize="16" fontWeight="600">detergent</text>
-        <rect x="248" y="168" width="108" height="132" rx="10" fill="#fff" stroke="#321b36" />
-        <circle cx="302" cy="220" r="28" fill="#eeedf8" stroke="#321b36" />
-        <text x="268" y="274" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="13" fontWeight="600">paste</text>
-        <rect x="372" y="210" width="116" height="140" rx="10" fill="#fff" stroke="#321b36" />
-        <text x="392" y="278" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="16" fontWeight="600">coffee</text>
-        <text x="24" y="392" fill="#736675" fontFamily="Nunito Sans, sans-serif" fontSize="14">A small cart can still feed a very large company.</text>
-      </svg>
+    <figure className="ip-hero-still">
+      <div className="ip-receipt" aria-label={`Grocery receipt totaling ${formatMoney(RECEIPT_TOTAL)}`}>
+        <p className="ip-receipt-title">GROCERY</p>
+        <p className="ip-receipt-meta">Everyday cart</p>
+        <ul>
+          {RECEIPT_LINES.map((row) => (
+            <li key={row.item}>
+              <span>{row.item}</span>
+              <span>{formatMoney(row.price)}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="ip-receipt-total">
+          <span>Total</span>
+          <span>{formatMoney(RECEIPT_TOTAL)}</span>
+        </p>
+      </div>
+      <div className="ip-hero-cluster" aria-hidden="true">
+        <EditorialIllustration name="toilet-paper" className="ip-hero-icon" decorative />
+        <EditorialIllustration name="coffee" className="ip-hero-icon" decorative />
+        <EditorialIllustration name="detergent" className="ip-hero-icon" decorative />
+        <EditorialIllustration name="toothpaste" className="ip-hero-icon" decorative />
+        <EditorialIllustration name="grocery-bag" className="ip-hero-icon" decorative />
+        <EditorialIllustration name="soap" className="ip-hero-icon" decorative />
+      </div>
+      <figcaption>
+        A small cart can still feed a very large company.
+      </figcaption>
     </figure>
   );
 }
@@ -79,81 +92,64 @@ export default function ImpactPage() {
           </h1>
           <p>
             Detergent, toothpaste, and a bag of coffee look like small, separate
-            decisions. They are also cash flowing into businesses whose owners,
-            political spending, and published giving records rarely appear on the
-            package. This page collects a few of those facts so an ordinary
-            checkout is a little easier to see.
+            decisions. A few parent companies own many of those familiar names,
+            control large shares of some categories, and spend real money
+            advocating in Washington. The rest of this page follows that trail,
+            then points to businesses that publish a giving commitment.
           </p>
         </div>
         <ImpactHeroVisual />
       </section>
 
-      <section className="ip-money" aria-labelledby="ip-money-stat">
-        <div className="ip-money-stat">
-          <p className="story-eyebrow story-eyebrow-on-plum">Fiscal 2025</p>
-          <p id="ip-money-stat" className="ip-giant">
-            $16B+
-          </p>
-          <p className="ip-giant-label">Returned to P&amp;G shareholders</p>
-        </div>
-        <div className="ip-money-body">
-          <p>
-            In the year ended June 30, 2025, Procter &amp; Gamble reported
-            returning more than $16 billion to shareholders: about $9.9 billion
-            as dividends and $6.5 billion as share repurchases. That is cash paid
-            to owners of the company, not revenue, not profit, and not a claim
-            that a bottle of shampoo is a dividend check. It is still a clear
-            picture of how a major consumer-products company chooses to use cash
-            once it has it.
-          </p>
-          <figure
-            className="ip-money-chart"
-            aria-label="P&G fiscal 2025 shareholder distributions split between dividends and share repurchases"
-          >
-            <p className="ip-kicker">Share of these distributions, not of revenue</p>
-            <div
-              className="ip-money-bar"
-              role="img"
-              aria-label={`Dividends ${formatShare(DIVIDEND_SHARE)}, share repurchases ${formatShare(BUYBACK_SHARE)} of total shareholder distributions`}
-            >
-              <div className="ip-money-seg ip-money-div" style={{ flexGrow: DIVIDENDS_B }}>
-                <strong>Dividends</strong>
-                <span>$9.9B · {formatShare(DIVIDEND_SHARE)}</span>
-              </div>
-              <div className="ip-money-seg ip-money-buy" style={{ flexGrow: BUYBACKS_B }}>
-                <strong>Buybacks</strong>
-                <span>$6.5B · {formatShare(BUYBACK_SHARE)}</span>
-              </div>
-            </div>
-            <p className="ip-caption">
-              About ${TOTAL_RETURNED_B.toFixed(1)} billion in company-reported
-              cash returned. The segments add up to 100% of that total.
-            </p>
-          </figure>
-          <p className="ip-source">
-            {shareholder.reportingPeriod} ·{" "}
-            <a href={shareholder.sourceUrl}>
-              {shareholder.sourceName}, {shareholder.sourceTitle}
-            </a>
-          </p>
-        </div>
-      </section>
-
       <section className="ip-own">
         <div className="ip-own-copy">
+          <p className="story-eyebrow">01 / Ownership</p>
           <h2>
             Different labels.
             <span>Same owners.</span>
           </h2>
           <p>
-            A new label can feel like a new company. The directories below are a
-            small official sample of familiar names that sit under four large
-            parents. Choose a parent to see the brands in this example. It is not
-            a market-share study, and it is not a claim that these four firms own
-            every aisle.
+            A new label can feel like a new company. Choose a parent below to
+            see a sample of everyday brands named on that company&apos;s own
+            directory. It is a map of ownership, not a claim that these four
+            firms own every aisle.
           </p>
         </div>
         <OwnershipNetwork />
+      </section>
+
+      <section className="ip-evidence">
+        <div className="ip-evidence-intro">
+          <p className="story-eyebrow">02 / Category share</p>
+          <h2>Two P&amp;G brands take more than half the laundry money.</h2>
+          <p>
+            Ownership charts get more concrete in a single category. In U.S.
+            liquid laundry detergent, Tide and Gain sit under the same parent
+            and, together, collected more than half of dollar sales in a recent
+            Circana year.
+          </p>
+        </div>
+        <article className="ip-evidence-feature">
+          <p className="ip-kicker">{laundryStat.kicker}</p>
+          <p className="ip-giant ip-giant-on-ivory">{laundryStat.statistic}</p>
+          <p className="ip-evidence-label">{laundryStat.label}</p>
+          <div
+            className="ip-share-bar"
+            role="img"
+            aria-label="More than 55 percent of U.S. liquid laundry detergent dollar sales"
+          >
+            <span style={{ width: "55%" }} />
+            <em>Tide + Gain</em>
+            <i>Everyone else</i>
+          </div>
+          <p>{laundryStat.explanation}</p>
+          <p className="ip-source">
+            {laundryStat.reportingPeriod} ·{" "}
+            <a href={laundryStat.sourceUrl}>
+              {laundryStat.sourceName}, {laundryStat.sourceTitle}
+            </a>
+          </p>
+        </article>
       </section>
 
       <section className="ip-lobby">
@@ -165,21 +161,25 @@ export default function ImpactPage() {
             height={996}
           />
           <div className="ip-lobby-stat">
-            <p className="story-eyebrow story-eyebrow-on-plum">Calendar 2024</p>
-            <p className="ip-giant">$4.45B</p>
-            <p className="ip-giant-label">Reported U.S. federal lobbying</p>
+            <p className="story-eyebrow story-eyebrow-on-plum">03 / Influence</p>
+            <p className="ip-giant">
+              ${(CPG_LOBBYING_TOTAL_2024 / 1_000_000).toFixed(1)}M
+            </p>
+            <p className="ip-giant-label">
+              2024 federal lobbying by ten grocery and household parents
+            </p>
           </div>
         </figure>
         <div className="ip-lobby-body">
           <div className="ip-lobby-copy">
             <p>
-              Organizations that file federal lobbying reports spent about $4.45
-              billion in 2024 trying to influence laws and rules in Washington.
-              The total includes corporations, trade associations, unions, and
-              other filers. It is not campaign money, and it does not prove that
-              any particular bill passed because of it. OpenSecrets&apos; series
-              shows the figure climbing from $4.11 billion in 2022 to $4.45
-              billion in 2024, a record in their accounting.
+              The same kind of companies that stock the detergent aisle also
+              hire people to talk to Congress. In 2024, this selected set of ten
+              grocery and household parent companies reported about $
+              {(CPG_LOBBYING_TOTAL_2024 / 1_000_000).toFixed(1)} million in U.S.
+              federal lobbying. That is paid advocacy about laws and rules, not
+              campaign contributions, and it is not every organization that
+              filed in Washington.
             </p>
             <p className="ip-source ip-source-on-plum">
               {lobbying.reportingPeriod} ·{" "}
@@ -188,93 +188,103 @@ export default function ImpactPage() {
               </a>
             </p>
           </div>
-          <figure className="ip-lobby-chart" aria-label="Federal lobbying totals from 2022 to 2024">
-            <p className="ip-kicker">OpenSecrets annual totals, $0 to $5B</p>
-            <div className="ip-lobby-plot">
-              <div className="ip-lobby-axis" aria-hidden="true">
-                <span>$5B</span>
-                <span>$2.5B</span>
-                <span>$0</span>
-              </div>
-              <div className="ip-lobby-cols">
-                {LOBBYING_YEARS.map((row) => {
-                  const billions = lobbyBillions(row.amount);
-                  const height = (billions / LOBBY_CAP_B) * 100;
-                  return (
-                    <div key={row.year} className="ip-lobby-col">
-                      <strong>{row.amount}</strong>
-                      <div className="ip-lobby-track">
-                        <div style={{ height: `${height}%` }} />
-                      </div>
-                      <span>{row.year}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+          <figure
+            className="ip-lobby-chart"
+            aria-label="2024 federal lobbying by selected grocery and household parent companies"
+          >
+            <p className="ip-kicker">OpenSecrets parent-client totals</p>
+            <ul className="ip-lobby-bars">
+              {CPG_LOBBYING_2024.map((row) => (
+                <li key={row.parent}>
+                  <a href={row.sourceUrl}>{row.parent}</a>
+                  <strong>{formatLobby(row.amount)}</strong>
+                  <span>
+                    <i style={{ width: `${(row.amount / LOBBY_CAP) * 100}%` }} />
+                  </span>
+                </li>
+              ))}
+            </ul>
             <p className="ip-caption">
-              Photograph: {EDITORIAL_ASSETS.capitolWestFront.credit} (public domain).
+              A selected set, not a ranking. Unilever includes its Unilever US
+              total. Photograph: {EDITORIAL_ASSETS.capitolWestFront.credit}{" "}
+              (public domain).
             </p>
           </figure>
         </div>
       </section>
 
-      <section className="ip-evidence">
-        <div className="ip-evidence-intro">
-          <h2>A few more numbers worth sitting with.</h2>
+      <section className="ip-compare">
+        <div className="ip-compare-intro">
+          <p className="story-eyebrow">04 / Published commitments</p>
+          <h2>The same aisle, two different kinds of promise.</h2>
           <p>
-            Ownership charts are easier to dismiss until you see how concentrated
-            a familiar category can be, and how large a published giving record
-            can grow when a business designs for it. These figures come from
-            Circana data reported in the trade press and from the companies&apos;
-            own impact pages. None of them were produced by Elsewhere.
+            P&amp;G is the parent behind Tide and Gain. In fiscal 2025 it
+            reported $16.1 billion in net earnings and returned more than $16
+            billion to shareholders. Its citizenship reporting describes
+            community programs, including 25 billion liters of drinking water
+            delivered over the life of Children&apos;s Safe Drinking Water, but
+            it does not publish a single FY2025 charitable-dollar total that can
+            be ratioed against earnings. Good Store&apos;s EcoGeek detergent
+            publishes a different kind of claim: 100% of that line&apos;s
+            profits go to Coral Reef Alliance. Those are not equivalent
+            accounting categories, and the Good Store figure is the seller&apos;s
+            pledge, not an audited donation from your receipt.
           </p>
         </div>
-        <div className="ip-evidence-grid">
-          <article className="ip-evidence-feature">
-            <p className="ip-kicker">{laundryStat.kicker}</p>
-            <p className="ip-giant ip-giant-on-ivory">{laundryStat.statistic}</p>
-            <p className="ip-evidence-label">{laundryStat.label}</p>
-            <div
-              className="ip-share-bar"
-              role="img"
-              aria-label="More than 55 percent of U.S. liquid laundry detergent dollar sales"
-            >
-              <span style={{ width: "55%" }} />
+        <div className="ip-compare-grid">
+          <article className="ip-compare-card ip-compare-card-muted">
+            <div className="ip-compare-visual">
+              <img
+                src={SITE_IMAGES.householdEssentials.src}
+                alt={SITE_IMAGES.householdEssentials.alt}
+              />
             </div>
-            <p>{laundryStat.explanation}</p>
+            <p className="ip-kicker">P&amp;G / Tide &amp; Gain</p>
+            <p className="ip-evidence-stat">$16.1B</p>
+            <p className="ip-evidence-label">FY2025 net earnings</p>
+            <p>
+              Plus about $9.9 billion in dividends and $6.5 billion in share
+              repurchases the same year. Community impact is reported as
+              programs and product donations, not as a company-wide giving
+              percentage.
+            </p>
             <p className="ip-source">
-              {laundryStat.reportingPeriod} ·{" "}
-              <a href={laundryStat.sourceUrl}>
-                {laundryStat.sourceName}, {laundryStat.sourceTitle}
+              {shareholder.reportingPeriod} ·{" "}
+              <a href={shareholder.sourceUrl}>
+                {shareholder.sourceName}, {shareholder.sourceTitle}
+              </a>
+              {" · "}
+              <a href="https://www.pginvestor.com/news/news-details/2025/PG-Announces-Fourth-Quarter-and-Fiscal-Year-2025-Results/default.aspx">
+                FY2025 results
               </a>
             </p>
           </article>
-          <article>
-            <p className="ip-kicker">{bombasStat.kicker}</p>
-            <p className="ip-evidence-stat">{bombasStat.statistic}</p>
-            <p className="ip-evidence-label">{bombasStat.label}</p>
-            <p>{bombasStat.explanation}</p>
-            <p className="ip-source">
-              {bombasStat.reportingPeriod} ·{" "}
-              <a href={bombasStat.sourceUrl}>
-                {bombasStat.sourceName}, {bombasStat.sourceTitle}
-              </a>
+          <article className="ip-compare-card ip-compare-card-alt">
+            <div className="ip-compare-visual">
+              <EditorialIllustration name="detergent" />
+            </div>
+            <p className="ip-kicker">Good Store EcoGeek detergent</p>
+            <p className="ip-evidence-stat">100%</p>
+            <p className="ip-evidence-label">of EcoGeek profits, pledged</p>
+            <p>
+              The company says profits from this laundry powder go to Coral Reef
+              Alliance Maui Watershed Restoration. That is a published
+              commitment for one product line, not a dollar amount we can count
+              from a checkout.
             </p>
-          </article>
-          <article>
-            <p className="ip-kicker">{booksStat.kicker}</p>
-            <p className="ip-evidence-stat">{booksStat.statistic}</p>
-            <p className="ip-evidence-label">{booksStat.label}</p>
-            <p>{booksStat.explanation}</p>
             <p className="ip-source">
-              {booksStat.reportingPeriod} ·{" "}
-              <a href={booksStat.sourceUrl}>
-                {booksStat.sourceName}, {booksStat.sourceTitle}
+              Seller claim ·{" "}
+              <a href="https://good.store/pages/our-founders-hank-john-green">
+                Good Store founders page
               </a>
             </p>
           </article>
         </div>
+        <p className="ip-caption ip-compare-note">
+          Dividends and buybacks are {formatShare(DIVIDEND_SHARE)} and{" "}
+          {formatShare(BUYBACK_SHARE)} of P&amp;G&apos;s reported shareholder
+          distributions, not of revenue.
+        </p>
       </section>
 
       <section className="ip-swaps">
@@ -286,9 +296,8 @@ export default function ImpactPage() {
           <p>
             You do not have to stop buying the things you need. Sometimes you
             just need a clearer map of where else the same errand can go. The
-            businesses on the right publish a giving commitment; the left side
-            is a category, not a brand we are ranking against. Prices are not
-            assumed to match.
+            left side is a category. The right side is a business that publishes
+            a giving commitment. Prices are not assumed to match.
           </p>
         </div>
         <ImpactSwapCarousel />
@@ -314,10 +323,9 @@ export default function ImpactPage() {
       <section className="ip-end">
         <h2>Where your money goes is still your choice.</h2>
         <p>
-          The figures on this page are not an argument that shopping can replace
-          politics. They are a reminder that an ordinary checkout still has a
-          destination, and that destination is still something you can look at
-          before you pay.
+          Large companies are not automatically the wrong place to shop. They
+          are simply large. If you would rather buy from a business that
+          publishes a specific giving commitment, the map is here.
         </p>
         <div className="story-cta-row">
           <a className="story-cta" href="/explore">

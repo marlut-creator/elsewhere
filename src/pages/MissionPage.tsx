@@ -1,71 +1,59 @@
+import BrandOwnershipMap from "../components/BrandOwnershipMap";
 import EditorialChrome from "../components/EditorialChrome";
+import EditorialIllustration from "../components/EditorialIllustration";
+import { SITE_IMAGES } from "../data/siteImages";
 
 function MissionHeroVisual() {
+  const photo = SITE_IMAGES.amazonRainforest;
   return (
     <figure className="ms-hero-visual">
-      <svg viewBox="0 0 420 360" role="img" aria-label="Everyday purchases moving toward causes instead of a faceless corporation">
-        <rect x="8" y="18" width="404" height="324" rx="18" fill="#4a2a50" />
-        <rect x="28" y="38" width="150" height="118" rx="12" fill="#eeedf8" />
-        <path d="M58 78h52v46a14 14 0 0 1-14 14h-24a14 14 0 0 1-14-14V78Z" fill="none" stroke="#321b36" strokeWidth="3" />
-        <path d="M110 86h16a10 10 0 0 1 0 20h-16" fill="none" stroke="#321b36" strokeWidth="3" />
-        <path d="M68 58c2 8 2 12 0 18M88 54c3 9 3 14 0 20" fill="none" stroke="#6679cc" strokeWidth="2.4" strokeLinecap="round" />
-        <text x="48" y="138" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="13" fontWeight="600">Coffee</text>
-        <rect x="196" y="46" width="88" height="88" rx="12" fill="#f7f3e8" />
-        <rect x="214" y="78" width="52" height="28" rx="7" fill="none" stroke="#321b36" strokeWidth="3" />
-        <path d="M226 78c4-12 30-12 34 0" fill="none" stroke="#6679cc" strokeWidth="2.4" />
-        <text x="216" y="124" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="13" fontWeight="600">Soap</text>
-        <rect x="302" y="38" width="90" height="118" rx="12" fill="#eeedf8" />
-        <ellipse cx="347" cy="78" rx="22" ry="12" fill="none" stroke="#321b36" strokeWidth="3" />
-        <path d="M325 78v42c0 8 10 14 22 14s22-6 22-14V78" fill="none" stroke="#321b36" strokeWidth="3" />
-        <text x="318" y="142" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="13" fontWeight="600">Paper</text>
-        <path d="M102 168v28M240 148v48M347 168v28" stroke="#9faee8" strokeWidth="2.4" strokeDasharray="4 6" />
-        <path d="M102 196h245" stroke="#9faee8" strokeWidth="2.4" />
-        <path d="M347 196v22" stroke="#9faee8" strokeWidth="2.4" />
-        <circle cx="210" cy="248" r="46" fill="#6679cc" />
-        <path d="M192 250c8-16 36-16 36 0-8 18-18 28-18 28s-10-10-18-28Z" fill="#f7f3e8" />
-        <text x="154" y="318" fill="#eeedf8" fontFamily="Dosis, sans-serif" fontSize="15" fontWeight="600">Somewhere better</text>
-      </svg>
+      <img
+        src={photo.src}
+        alt={photo.alt}
+        width={photo.width}
+        height={photo.height}
+      />
+      <figcaption>
+        {photo.credit}. {photo.license}. Amazon rainforest near Manaus, Brazil.
+      </figcaption>
     </figure>
   );
 }
 
-function MissionLabelVisual() {
+function MissionSwapVisual() {
   return (
-    <figure className="ms-label-visual">
-      <svg viewBox="0 0 360 280" role="img" aria-label="Several product labels collapsing toward a smaller set of parent companies">
-        <rect x="12" y="16" width="96" height="72" rx="8" fill="#fff" stroke="#321b36" />
-        <text x="28" y="58" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="16" fontWeight="600">Brand A</text>
-        <rect x="122" y="16" width="96" height="72" rx="8" fill="#eeedf8" stroke="#321b36" />
-        <text x="138" y="58" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="16" fontWeight="600">Brand B</text>
-        <rect x="232" y="16" width="96" height="72" rx="8" fill="#fff" stroke="#321b36" />
-        <text x="248" y="58" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="16" fontWeight="600">Brand C</text>
-        <path d="M60 88v36h220V88" fill="none" stroke="#6679cc" strokeWidth="2.2" />
-        <rect x="86" y="124" width="188" height="56" rx="10" fill="#321b36" />
-        <text x="118" y="158" fill="#f7f3e8" fontFamily="Dosis, sans-serif" fontSize="18" fontWeight="600">One parent</text>
-        <text x="46" y="214" fill="#736675" fontFamily="Nunito Sans, sans-serif" fontSize="13">A sample of how labels can share an owner.</text>
-        <text x="46" y="234" fill="#9b8e97" fontFamily="Nunito Sans, sans-serif" fontSize="12">Not a claim that a few firms own every aisle.</text>
-      </svg>
-    </figure>
-  );
-}
-
-function MissionReceiptVisual() {
-  return (
-    <figure className="ms-receipt-visual">
-      <svg viewBox="0 0 360 300" role="img" aria-label="A household receipt with the usual costs still on it">
-        <rect x="58" y="18" width="244" height="264" rx="8" fill="#fff" stroke="#321b36" />
-        <path d="M70 42h220M70 54h160" stroke="#d3ccd1" strokeWidth="3" strokeLinecap="round" />
-        <text x="78" y="88" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="20" fontWeight="600">Usual stuff</text>
-        <text x="78" y="122" fill="#736675" fontFamily="Nunito Sans, sans-serif" fontSize="14">Coffee</text>
-        <text x="232" y="122" fill="#321b36" fontFamily="Nunito Sans, sans-serif" fontSize="14">still buying</text>
-        <text x="78" y="148" fill="#736675" fontFamily="Nunito Sans, sans-serif" fontSize="14">Soap</text>
-        <text x="232" y="148" fill="#321b36" fontFamily="Nunito Sans, sans-serif" fontSize="14">still buying</text>
-        <text x="78" y="174" fill="#736675" fontFamily="Nunito Sans, sans-serif" fontSize="14">Paper</text>
-        <text x="232" y="174" fill="#321b36" fontFamily="Nunito Sans, sans-serif" fontSize="14">still buying</text>
-        <path d="M78 196h204" stroke="#eeedf8" strokeWidth="2" />
-        <text x="78" y="226" fill="#6679cc" fontFamily="Dosis, sans-serif" fontSize="16" fontWeight="600">New item: none</text>
-        <text x="78" y="250" fill="#9b8e97" fontFamily="Nunito Sans, sans-serif" fontSize="12">The cart does not have to grow.</text>
-      </svg>
+    <figure className="ms-swap-visual">
+      <ol>
+        <li>
+          <EditorialIllustration name="coffee" />
+          <div>
+            <p className="ms-swap-kicker">Everyday product</p>
+            <p>A regular bag of coffee</p>
+          </div>
+        </li>
+        <li>
+          <img
+            src="/product-assets/cat-rescue-house-blend.jpg"
+            alt="Cat Rescue Coffee Company House Blend bag"
+          />
+          <div>
+            <p className="ms-swap-kicker">A better alternative</p>
+            <p>Cat Rescue Coffee, House Blend</p>
+          </div>
+        </li>
+        <li>
+          <EditorialIllustration name="pet-food" />
+          <div>
+            <p className="ms-swap-kicker">A cause receiving support</p>
+            <p>Animal welfare, as the seller documents it</p>
+          </div>
+        </li>
+      </ol>
+      <figcaption>
+        One ordinary restock can move toward a business that publishes where
+        the money goes. The destination is the seller&apos;s published claim,
+        not a counted outcome from this cart.
+      </figcaption>
     </figure>
   );
 }
@@ -117,7 +105,7 @@ export default function MissionPage() {
             label means independence.
           </p>
         </div>
-        <MissionLabelVisual />
+        <BrandOwnershipMap />
       </section>
 
       <section className="ms-section ms-afford">
@@ -142,7 +130,7 @@ export default function MissionPage() {
             answer.
           </p>
         </div>
-        <MissionReceiptVisual />
+        <MissionSwapVisual />
       </section>
 
       <section className="ms-independence">

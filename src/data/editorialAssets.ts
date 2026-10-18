@@ -24,4 +24,10 @@ export const EDITORIAL_ASSETS = {
     alt: "Kitchen table with everyday essentials: coffee, soap, toilet paper, and a dish of pet treats",
     note: "Original Elsewhere still life. Unbranded everyday household items.",
   },
+  amazonRainforest: {
+    src: "/editorial-assets/amazon-rainforest-manaus.jpg",
+    alt: "Aerial view of the Amazon rainforest and river near Manaus, Brazil",
+    credit: "Neil Palmer / CIAT",
+    note: "CC BY-SA 2.0. Wikimedia Commons file “Amazon CIAT (2).jpg.”",
+  },
 } as const;

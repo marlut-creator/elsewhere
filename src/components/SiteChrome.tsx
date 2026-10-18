@@ -7,7 +7,6 @@ import { CategoryIcon } from "./CategoryIcons";
 import { CauseGroupIcon } from "./CauseIcons";
 import type { CauseGroup } from "../data/causeTaxonomy";
 import { exploreCauseHref, orderedShopCauseGroups } from "../data/shopCauses";
-import MyElsewhereExampleDashboard from "./MyElsewhereExampleDashboard";
 import ShelfIcon from "./ShelfIcon";
 
 export type SitePage =
@@ -248,144 +247,23 @@ function ExploreMegaMenu({ current = false }: { current?: boolean }) {
   );
 }
 
-function MissionMegaMenu({ current = false }: { current?: boolean }) {
-  const [open, setOpen] = useState(false);
+function HeaderNavLink({
+  href,
+  label,
+  current = false,
+}: {
+  href: string;
+  label: string;
+  current?: boolean;
+}) {
   return (
-    <MegaPanel
-      id="nav-mission"
-      label="Mission"
-      href="/mission"
-      layout="mission"
-      current={current}
-      open={open}
-      onOpen={() => setOpen(true)}
-      onClose={() => setOpen(false)}
+    <a
+      href={href}
+      className={`mega-nav-trigger mega-nav-link${current ? " mega-nav-trigger-current" : ""}`}
+      aria-current={current ? "page" : undefined}
     >
-      <div className="mega-panel-grid mega-panel-mission">
-        <div className="mega-panel-links">
-          <p className="mega-panel-heading">Why we exist</p>
-          <ul>
-            <li>
-              <a href="/mission">Our mission</a>
-            </li>
-            <li>
-              <a href="/about">Meet the founder</a>
-            </li>
-            <li>
-              <a href="/how-products-are-selected">How products are selected</a>
-            </li>
-          </ul>
-        </div>
-        <div className="mega-panel-visuals mega-panel-visuals-compact">
-          <div className="mega-about-copy-panel">
-            <p className="mega-panel-heading">The short version</p>
-            <p className="mega-about-quote">Buy it elsewhere.</p>
-            <p className="mega-about-body">
-              Find everyday products from businesses that publish what they do
-              with the money.
-            </p>
-          </div>
-        </div>
-      </div>
-    </MegaPanel>
-  );
-}
-
-function ImpactMegaMenu({ current = false }: { current?: boolean }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <MegaPanel
-      id="nav-impact"
-      label="Impact"
-      href="/impact"
-      layout="impact"
-      current={current}
-      open={open}
-      onOpen={() => setOpen(true)}
-      onClose={() => setOpen(false)}
-    >
-      <div className="mega-panel-grid mega-panel-impact">
-        <div className="mega-panel-links">
-          <p className="mega-panel-heading">The bigger picture</p>
-          <ul>
-            <li>
-              <a href="/impact">Impact</a>
-            </li>
-          </ul>
-          <p className="mega-panel-heading">Your impact</p>
-          <ul>
-            <li>
-              <a href="/my-elsewhere">My Elsewhere</a>
-            </li>
-            <li>
-              <a href="/how-impact-estimates-work">How impact estimates work</a>
-            </li>
-            <li>
-              <a href="/how-we-verify">How we verify claims</a>
-            </li>
-            <li>
-              <a href="/how-products-are-selected">How products are selected</a>
-            </li>
-          </ul>
-        </div>
-        <div className="mega-panel-visuals mega-panel-visuals-compact">
-          <div className="mega-impact-preview">
-            <MyElsewhereExampleDashboard variant="mini" />
-          </div>
-        </div>
-      </div>
-    </MegaPanel>
-  );
-}
-
-function AboutMegaMenu({ current = false }: { current?: boolean }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <MegaPanel
-      id="nav-about"
-      label="About"
-      layout="about"
-      current={current}
-      open={open}
-      onOpen={() => setOpen(true)}
-      onClose={() => setOpen(false)}
-    >
-      <div className="mega-panel-grid mega-panel-about mega-panel-about-grid">
-        <div className="mega-panel-links">
-          <p className="mega-panel-heading">Elsewhere</p>
-          <ul>
-            <li>
-              <a href="/about">About Elsewhere</a>
-            </li>
-            <li>
-              <a href="/mission">Our mission</a>
-            </li>
-            <li>
-              <a href="/#how-it-works">How it works</a>
-            </li>
-            <li>
-              <a href="/suggest-a-brand">Suggest a brand</a>
-            </li>
-            <li>
-              <a href="/notes">Notes from Elsewhere</a>
-            </li>
-            <li>
-              <a href="/contact">Contact</a>
-            </li>
-          </ul>
-        </div>
-        <div className="mega-panel-visuals mega-panel-visuals-about">
-          <div className="mega-about-copy-panel">
-            <p className="mega-panel-heading">Why Elsewhere exists</p>
-            <p className="mega-about-quote">&ldquo;You&apos;re buying it anyway.&rdquo;</p>
-            <p className="mega-about-body">
-              Elsewhere helps ordinary purchases support businesses doing
-              something useful with the money.
-            </p>
-          </div>
-        </div>
-      </div>
-    </MegaPanel>
+      {label}
+    </a>
   );
 }
 
@@ -412,16 +290,10 @@ export function SiteHeader({ onGoHome, currentPage }: ChromeProps = {}) {
 
         <nav className="site-header-center mega-nav-desktop" aria-label="Sections">
           <ExploreMegaMenu current={currentPage === "explore"} />
-          <MissionMegaMenu current={currentPage === "mission"} />
-          <ImpactMegaMenu current={currentPage === "impact"} />
-          <AboutMegaMenu
-            current={
-              currentPage === "about" ||
-              currentPage === "notes" ||
-              currentPage === "contact" ||
-              currentPage === "suggest"
-            }
-          />
+          <HeaderNavLink href="/mission" label="Mission" current={currentPage === "mission"} />
+          <HeaderNavLink href="/impact" label="Impact" current={currentPage === "impact"} />
+          <HeaderNavLink href="/about" label="About" current={currentPage === "about"} />
+          <HeaderNavLink href="/contact" label="Contact" current={currentPage === "contact"} />
         </nav>
 
         <div className="site-header-right">
@@ -472,6 +344,9 @@ export function SiteHeader({ onGoHome, currentPage }: ChromeProps = {}) {
           <a href="/about" {...pageCurrent(currentPage, "about")}>
             About
           </a>
+          <a href="/contact" {...pageCurrent(currentPage, "contact")}>
+            Contact
+          </a>
           <a href="/my-elsewhere" {...pageCurrent(currentPage, "my-elsewhere")}>
             My Elsewhere
           </a>
@@ -481,9 +356,6 @@ export function SiteHeader({ onGoHome, currentPage }: ChromeProps = {}) {
           </a>
           <a href="/suggest-a-brand" {...pageCurrent(currentPage, "suggest")}>
             Suggest a brand
-          </a>
-          <a href="/contact" {...pageCurrent(currentPage, "contact")}>
-            Contact
           </a>
           <span className="site-mobile-nav-label">Transparency</span>
           <a href="/how-we-verify">How we verify claims</a>
