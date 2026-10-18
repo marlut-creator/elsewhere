@@ -1,5 +1,6 @@
 {
-  "description": "Helps users discover and shop ethical product alternatives that support charitable causes with verified giving, promoting mindful consumerism.",
+  "title": "Elsewhere",
+  "description": "Find everyday products from businesses that give something back. No ads. No sponsors. No commissions.",
   "robots": {
     "index": false
   },
