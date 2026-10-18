@@ -52,6 +52,96 @@ export const BRAND_GROUPS: BrandGroup[] = [
   },
 ];
 
+/**
+ * Impact-page ownership sample. Kept separate from BRAND_GROUPS so the
+ * homepage visual does not change when this list expands.
+ * Brands are named on the linked official directories as of 2026-10-17.
+ * Ben & Jerry's is omitted: it is no longer a Unilever subsidiary after the
+ * 2025 ice-cream demerger.
+ */
+export const IMPACT_BRAND_GROUPS: BrandGroup[] = [
+  {
+    parent: "Procter & Gamble",
+    brands: [
+      "Tide",
+      "Crest",
+      "Gillette",
+      "Pampers",
+      "Olay",
+      "Head & Shoulders",
+      "Dawn",
+      "Bounty",
+    ],
+    sourceUrl: "https://us.pg.com/brands/",
+  },
+  {
+    parent: "Unilever",
+    brands: ["Dove", "Hellmann's", "Knorr", "Vaseline", "Axe"],
+    sourceUrl: "https://www.unilever.com/brands/all-brands/",
+  },
+  {
+    parent: "Nestlé",
+    brands: ["Nescafé", "KitKat", "Purina", "Gerber", "Nespresso", "Stouffer's"],
+    sourceUrl: "https://www.nestle.com/brands/brandssearchlist",
+  },
+  {
+    parent: "PepsiCo",
+    brands: ["Pepsi", "Lay's", "Gatorade", "Doritos", "Quaker", "Cheetos", "Tostitos"],
+    sourceUrl: "https://www.pepsico.com/brands",
+  },
+];
+
+export type ImpactEvidenceStat = {
+  id: string;
+  kicker: string;
+  statistic: string;
+  label: string;
+  explanation: string;
+  reportingPeriod: string;
+  sourceName: string;
+  sourceTitle: string;
+  sourceUrl: string;
+};
+
+export const IMPACT_EVIDENCE: ImpactEvidenceStat[] = [
+  {
+    id: "laundry-concentration",
+    kicker: "U.S. liquid laundry detergent",
+    statistic: "55%+",
+    label: "Tide and Gain dollar share",
+    explanation:
+      "Circana OmniMarket figures reported by Happi put Tide and Gain, both P&G brands, at more than 55% of U.S. liquid laundry detergent dollar sales in the 52 weeks ended November 3, 2024. Two labels, one parent, more than half the category money.",
+    reportingPeriod: "52 weeks ended November 3, 2024",
+    sourceName: "Happi, citing Circana OmniMarket",
+    sourceTitle: "Convenience & Sustainability",
+    sourceUrl: "https://www.happi.com/convenience-sustainability/",
+  },
+  {
+    id: "bombas-donations",
+    kicker: "Company-reported giving",
+    statistic: "200M+",
+    label: "Items Bombas says it has donated",
+    explanation:
+      "Bombas publishes a running total of clothing items donated through its purchase-one-give-one model. The company headlines more than 200 million items; its public counter listed 204,002,196 as of February 28, 2026. That is Bombas's record, not an Elsewhere result.",
+    reportingPeriod: "As of February 28, 2026",
+    sourceName: "Bombas",
+    sourceTitle: "Bee Better impact counter",
+    sourceUrl: "https://beebetter.bombas.com/impact",
+  },
+  {
+    id: "bwb-books",
+    kicker: "Company-reported giving",
+    statistic: "38M+",
+    label: "Books Better World Books says it has donated",
+    explanation:
+      "Better World Books reports donating more than 38 million books and generating more than $35 million for literacy programs. The figures describe that company's published outcomes, not purchases made through this site.",
+    reportingPeriod: "Company mission page, reviewed 2026-10-17",
+    sourceName: "Better World Books",
+    sourceTitle: "Our Mission",
+    sourceUrl: "https://www.betterworldbooks.com/go/mission",
+  },
+];
+
 /** OpenSecrets published table, rounded in their 2024 news analysis to $4.4B. */
 export const LOBBYING_YEARS: YearAmount[] = [
   { year: "2022", amount: "$4.11B" },

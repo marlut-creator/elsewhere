@@ -1,52 +1,79 @@
 import EditorialChrome from "../components/EditorialChrome";
+import { products } from "../data/products";
+
+const PREVIEW_IDS = [
+  "cat-rescue-house-blend",
+  "who-gives-a-crap-100-recycled-toilet-paper",
+  "tentree-ten-t-shirt",
+];
+
+function previewProducts() {
+  return PREVIEW_IDS.map((id) => {
+    const product = products.find((entry) => entry.id === id);
+    if (!product) {
+      throw new Error(`About page is missing catalog product ${id}`);
+    }
+    return product;
+  });
+}
+
+function AisleVisual() {
+  return (
+    <figure className="ab-aisle">
+      <svg viewBox="0 0 520 420" role="img" aria-label="A crowded shelf of everyday household products with overlapping labels">
+        <rect width="520" height="420" rx="16" fill="#f1eee7" />
+        <rect x="24" y="36" width="472" height="28" rx="4" fill="#d3ccd1" />
+        <rect x="40" y="84" width="92" height="150" rx="8" fill="#fff" stroke="#321b36" />
+        <rect x="52" y="98" width="68" height="48" rx="4" fill="#eeedf8" />
+        <text x="56" y="128" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="13" fontWeight="600">soap</text>
+        <rect x="148" y="72" width="100" height="162" rx="8" fill="#fff" stroke="#321b36" />
+        <rect x="162" y="88" width="72" height="56" rx="4" fill="#6679cc" />
+        <text x="170" y="122" fill="#f7f3e8" fontFamily="Dosis, sans-serif" fontSize="13" fontWeight="600">paper</text>
+        <rect x="264" y="90" width="88" height="144" rx="8" fill="#fff" stroke="#321b36" />
+        <circle cx="308" cy="132" r="22" fill="#eeedf8" stroke="#321b36" />
+        <text x="278" y="206" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="12" fontWeight="600">paste</text>
+        <rect x="368" y="78" width="108" height="156" rx="8" fill="#fff" stroke="#321b36" />
+        <rect x="384" y="96" width="76" height="40" rx="4" fill="#321b36" />
+        <text x="392" y="122" fill="#eeedf8" fontFamily="Dosis, sans-serif" fontSize="13" fontWeight="600">shampoo</text>
+        <rect x="72" y="252" width="120" height="112" rx="8" fill="#fff" stroke="#321b36" />
+        <text x="88" y="312" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="14" fontWeight="600">detergent</text>
+        <rect x="208" y="240" width="132" height="124" rx="8" fill="#fff" stroke="#321b36" />
+        <text x="228" y="300" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="14" fontWeight="600">another</text>
+        <text x="236" y="322" fill="#6679cc" fontFamily="Dosis, sans-serif" fontSize="14" fontWeight="600">label</text>
+        <rect x="356" y="256" width="116" height="108" rx="8" fill="#fff" stroke="#321b36" />
+        <text x="376" y="316" fill="#321b36" fontFamily="Dosis, sans-serif" fontSize="13" fontWeight="600">still more</text>
+        <path d="M40 84v-16h92M148 72v-20h100" stroke="#9b8e97" strokeWidth="1.4" />
+        <text x="36" y="400" fill="#736675" fontFamily="Nunito Sans, sans-serif" fontSize="13">Same aisle. Fewer owners than it looks.</text>
+      </svg>
+    </figure>
+  );
+}
+
+function DeskVisual() {
+  return (
+    <figure className="ab-desk">
+      <svg viewBox="0 0 360 240" role="img" aria-label="A laptop on a desk next to a small home server">
+        <rect width="360" height="240" rx="14" fill="#4a2a50" />
+        <rect x="36" y="48" width="176" height="112" rx="10" fill="#eeedf8" stroke="#321b36" />
+        <rect x="48" y="60" width="152" height="80" rx="4" fill="#321b36" />
+        <rect x="28" y="160" width="192" height="10" rx="3" fill="#9faee8" />
+        <rect x="236" y="72" width="72" height="96" rx="8" fill="#eeedf8" stroke="#321b36" />
+        <rect x="248" y="86" width="48" height="8" rx="2" fill="#6679cc" />
+        <rect x="248" y="102" width="48" height="8" rx="2" fill="#6679cc" />
+        <rect x="248" y="118" width="48" height="8" rx="2" fill="#9faee8" />
+        <text x="44" y="210" fill="#eeedf8" fontFamily="Dosis, sans-serif" fontSize="16" fontWeight="600">One person. One laptop.</text>
+      </svg>
+    </figure>
+  );
+}
 
 export default function AboutPage() {
+  const previews = previewProducts();
+
   return (
     <EditorialChrome page="about">
-      <section className="about-hero">
-        <p className="story-eyebrow">About</p>
-        <h1 className="about-hero-title">
-          Hi. I&apos;m Marlu.
-          <span>I got tired of waiting.</span>
-        </h1>
-        <p className="about-hero-lead">
-          Elsewhere started with a pretty ordinary frustration: I was tired of
-          spending my hard-earned money on everyday essentials, only to wonder
-          which enormous corporation was getting it next.
-        </p>
-        <p className="about-hero-support">
-          Consumers deserve a real choice — not a scavenger hunt through
-          parent companies every time they need toilet paper.
-        </p>
-      </section>
-
-      <section className="about-problem">
-        <div className="story-narrow">
-          <h2 className="story-display">
-            I was just trying to buy toilet paper.
-          </h2>
-          <p>
-            Somewhere between rising grocery bills, corporate promises, and
-            discovering that seemingly different brands often belong to the
-            same parent companies, I started wondering why finding a better
-            place to spend my money was so difficult.
-          </p>
-          <p>
-            I didn&apos;t want to become a full-time investigator every time I
-            needed shampoo. I just wanted to know whether there was another
-            business selling something similar, at a price I could actually
-            afford.
-          </p>
-          <p>
-            And I was getting tired of waiting for the companies with billions
-            of dollars to decide that people, animals, and the planet were
-            worth prioritizing.
-          </p>
-        </div>
-      </section>
-
-      <section className="about-founder">
-        <figure className="about-founder-photo">
+      <section className="ab-intro">
+        <figure className="ab-photo">
           <img
             src="/images/founder.jpg"
             alt="Marlu smiling beside a cardboard engineering project"
@@ -54,129 +81,133 @@ export default function AboutPage() {
             height={768}
           />
         </figure>
-        <div className="about-founder-copy">
-          <h2 className="story-display">
+        <div className="ab-intro-copy">
+          <p className="story-eyebrow">About</p>
+          <h1>
             Hi, I&apos;m Marlu.
             <span>I like making things.</span>
-          </h2>
+          </h1>
           <p>
             I was born in Shanghai and grew up in the mountains of Idaho,
             surrounded by animals and usually taking apart something I probably
-            wasn&apos;t supposed to.
+            wasn&apos;t supposed to. That habit never really went away. It
+            eventually turned into neuroscience, engineering, and product
+            design, including work on engineering tools for children and a
+            NASA-funded project that studied animals in microgravity.
           </p>
           <p>
-            That curiosity eventually took me into neuroscience, engineering,
-            and product design. I&apos;ve worked on children&apos;s engineering
-            tools, contributed to NASA-funded research involving animal studies
-            in microgravity, and explored how technology can help people in
-            everyday life.
-          </p>
-          <p>I&apos;m also preparing to start medical school.</p>
-          <p>
-            Outside of work, I spend a somewhat unreasonable amount of time
-            building things for my cats. My latest project is a homemade GPS
-            tracker, because apparently buying one wasn&apos;t complicated
-            enough.
+            I&apos;m preparing to start medical school, which is a sentence I
+            still say out loud as if it might become less surprising. Wildlife
+            and animal welfare have been in the picture the whole time, which
+            probably explains why a lot of my free hours go to slightly
+            overbuilt projects for my cats. The current one is a homemade GPS
+            tracker, because buying one would have been too easy.
           </p>
           <p>
-            I&apos;ve always cared about wildlife conservation and finding
-            practical ways to make the world a little better.
-          </p>
-          <p>
-            But working in engineering taught me something particularly useful:
-            meaningful changes don&apos;t always require people to completely
-            reinvent their lives.
-          </p>
-          <p>
-            Sometimes, the best solutions are the ones that make a better
-            choice easier.
-          </p>
-          <p className="about-founder-close">
-            Elsewhere is my attempt to build one of those solutions.
+            Engineering taught me that useful change often looks unglamorous:
+            make the better option easier to find, then get out of the way.
+            Elsewhere is my attempt to do that for ordinary shopping.
           </p>
         </div>
       </section>
 
-      <section className="about-exists">
-        <div className="story-narrow">
-          <h2 className="story-display">
-            I couldn&apos;t change the whole system.
-            <span>But I could build something.</span>
+      <section className="ab-story">
+        <div className="ab-story-copy">
+          <h2>
+            I was just trying to buy toilet paper.
           </h2>
           <p>
-            Elsewhere is a free place to discover businesses that support
-            causes worth caring about.
-          </p>
-          <ul className="about-cause-words">
-            <li>Animal rescue</li>
-            <li>Wildlife conservation</li>
-            <li>Clean water</li>
-            <li>Healthcare</li>
-            <li>Education</li>
-            <li>Communities that need support</li>
-          </ul>
-          <p>
-            The idea is simple: instead of asking people to buy more, help them
-            find better places to buy what they already need.
+            It started as the kind of errand nobody puts on a vision board.
+            Standing in a drugstore aisle, staring at a wall of nearly identical
+            packages, I realized I had no idea which company I was actually
+            handing money to, or whether any of them did something useful with
+            it. The labels looked independent. A little digging suggested
+            otherwise, and the digging was exactly as fun as it sounds.
           </p>
           <p>
-            Because not everyone can afford to donate.
-          </p>
-          <p className="about-exists-emphasis">
-            And doing something good shouldn&apos;t require having money left
-            over at the end of the month.
+            I did not want a new personality, a new budget, or a second job as
+            an amateur corporate researcher. I wanted to keep buying toothpaste
+            and paper goods without feeling like I needed a spreadsheet. If
+            there were businesses making the same ordinary things while
+            publishing a real giving commitment, finding them should not require
+            a scavenger hunt. That irritation is what turned into Elsewhere.
           </p>
         </div>
+        <AisleVisual />
       </section>
 
-      <section className="about-funding">
-        <div className="story-narrow">
-          <h2 className="about-funding-title">
+      <section className="ab-built">
+        <div className="ab-built-copy">
+          <h2>So I built a map for the purchases we already make.</h2>
+          <p>
+            Elsewhere is a free website for finding businesses that sell
+            everyday products and publish what they do with the money, whether
+            that is animal welfare, clean water, education, or environmental
+            restoration. You search for something you already buy. The site
+            shows documented alternatives, links to the seller&apos;s own
+            claim, and sends you straight to their checkout.
+          </p>
+          <p>
+            It is not a store, and it does not donate on your behalf. Some
+            swaps cost less, some cost more, and the point is to make those
+            differences visible so you can decide.
+          </p>
+        </div>
+        <ul className="ab-previews">
+          {previews.map((product) => (
+            <li key={product.id}>
+              <a href={`/explore?q=${encodeURIComponent(product.brand)}`}>
+                {product.image ? (
+                  <img
+                    src={product.image}
+                    alt={`${product.brand} ${product.productName}`}
+                  />
+                ) : (
+                  <span>{product.brand}</span>
+                )}
+                <strong>{product.brand}</strong>
+                <em>{product.productName}</em>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="ab-server">
+        <div className="ab-server-copy">
+          <h2>
             I&apos;m not trying to get rich.
             <span>I&apos;m trying to pay the server bill.</span>
           </h2>
           <p>
-            Elsewhere isn&apos;t a store, and I don&apos;t earn a commission
-            when you buy something.
+            Elsewhere is an independent project I build and maintain myself. It
+            does not take ads, sponsorships, affiliate commissions, or paid
+            rankings, and I do not earn a cut when you buy something. I made it
+            because I wanted it to exist, which is a terrible business plan and
+            a pretty good reason to keep the lights on carefully.
           </p>
           <p>
-            There will never be ads, sponsored rankings, paid placements, brand
-            sponsorships, or affiliate commissions.
-          </p>
-          <p>I&apos;m building Elsewhere because I think it should exist.</p>
-          <p>
-            Eventually, I might accept voluntary tips or sell a few stickers,
-            mugs, or other little things to help cover hosting, maintenance,
-            and getting the word out.
-          </p>
-          <p>
-            And if the project ever brings in more than it needs to operate,
-            I&apos;d like that extra money to support charitable causes.
-          </p>
-          <p className="about-funding-close">
-            The goal isn&apos;t to build another company that takes. It&apos;s
-            to build something useful that gives.
-          </p>
-          <p className="about-funding-note">
-            Tips, merchandise, and any surplus-giving policy are intended
-            future practices — not current programs. Elsewhere is not a
-            registered nonprofit, and nothing here is a donation ask or a
-            tax-deductible contribution. If those practices launch, the
-            financial reporting and policy will be published transparently on
-            this site.
+            One day I might accept voluntary tips or sell a few stickers to
+            cover hosting. Those are not programs yet, and nothing here is a
+            donation ask. If that ever changes, I will say so plainly on this
+            site. Elsewhere is not a registered nonprofit.
           </p>
         </div>
+        <DeskVisual />
       </section>
 
-      <section className="about-cta">
-        <h2 className="story-display">You were going to buy it anyway.</h2>
-        <p className="about-cta-line">Buy it elsewhere.</p>
+      <section className="ab-end">
+        <h2>If you were going to buy it anyway, you might as well know where the money goes.</h2>
+        <p>
+          You can start with something ordinary. Coffee, soap, toilet paper. The
+          less glamorous the errand, the more useful the map.
+        </p>
         <div className="story-cta-row">
           <a className="story-cta" href="/explore">
             Explore better places
           </a>
-          <a className="story-cta-secondary" href="/mission">
-            Our mission
+          <a className="story-cta-secondary" href="/contact">
+            Contact
           </a>
         </div>
       </section>

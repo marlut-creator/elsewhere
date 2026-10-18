@@ -63,6 +63,7 @@ export function SiteAnnouncementStrip() {
 function MegaPanel({
   id,
   label,
+  href,
   open,
   current = false,
   onOpen,
@@ -72,12 +73,13 @@ function MegaPanel({
 }: {
   id: string;
   label: string;
+  href?: string;
   open: boolean;
   current?: boolean;
   onOpen: () => void;
   onClose: () => void;
   children: ReactNode;
-  layout?: "explore" | "impact" | "about" | "default";
+  layout?: "explore" | "impact" | "about" | "mission" | "default";
 }) {
   const panelId = useId();
   const closeTimerRef = useRef<number | null>(null);
@@ -127,17 +129,30 @@ function MegaPanel({
         }
       }}
     >
-      <button
-        type="button"
-        className={`mega-nav-trigger${current ? " mega-nav-trigger-current" : ""}`}
-        aria-expanded={open}
-        aria-controls={panelId}
-        aria-current={current ? "true" : undefined}
-        id={id}
-        onClick={() => (open ? onClose() : handleOpen())}
-      >
-        {label}
-      </button>
+      {href ? (
+        <a
+          href={href}
+          className={`mega-nav-trigger mega-nav-link${current ? " mega-nav-trigger-current" : ""}`}
+          aria-expanded={open}
+          aria-controls={panelId}
+          aria-current={current ? "page" : undefined}
+          id={id}
+        >
+          {label}
+        </a>
+      ) : (
+        <button
+          type="button"
+          className={`mega-nav-trigger${current ? " mega-nav-trigger-current" : ""}`}
+          aria-expanded={open}
+          aria-controls={panelId}
+          aria-current={current ? "true" : undefined}
+          id={id}
+          onClick={() => (open ? onClose() : handleOpen())}
+        >
+          {label}
+        </button>
+      )}
       {open ? (
         <div
           id={panelId}
@@ -233,12 +248,56 @@ function ExploreMegaMenu({ current = false }: { current?: boolean }) {
   );
 }
 
+function MissionMegaMenu({ current = false }: { current?: boolean }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <MegaPanel
+      id="nav-mission"
+      label="Mission"
+      href="/mission"
+      layout="mission"
+      current={current}
+      open={open}
+      onOpen={() => setOpen(true)}
+      onClose={() => setOpen(false)}
+    >
+      <div className="mega-panel-grid mega-panel-mission">
+        <div className="mega-panel-links">
+          <p className="mega-panel-heading">Why we exist</p>
+          <ul>
+            <li>
+              <a href="/mission">Our mission</a>
+            </li>
+            <li>
+              <a href="/about">Meet the founder</a>
+            </li>
+            <li>
+              <a href="/how-products-are-selected">How products are selected</a>
+            </li>
+          </ul>
+        </div>
+        <div className="mega-panel-visuals mega-panel-visuals-compact">
+          <div className="mega-about-copy-panel">
+            <p className="mega-panel-heading">The short version</p>
+            <p className="mega-about-quote">Buy it elsewhere.</p>
+            <p className="mega-about-body">
+              Find everyday products from businesses that publish what they do
+              with the money.
+            </p>
+          </div>
+        </div>
+      </div>
+    </MegaPanel>
+  );
+}
+
 function ImpactMegaMenu({ current = false }: { current?: boolean }) {
   const [open, setOpen] = useState(false);
   return (
     <MegaPanel
       id="nav-impact"
       label="Impact"
+      href="/impact"
       layout="impact"
       current={current}
       open={open}
@@ -250,7 +309,7 @@ function ImpactMegaMenu({ current = false }: { current?: boolean }) {
           <p className="mega-panel-heading">The bigger picture</p>
           <ul>
             <li>
-              <a href="/impact">Why impact matters</a>
+              <a href="/impact">Impact</a>
             </li>
           </ul>
           <p className="mega-panel-heading">Your impact</p>
@@ -353,13 +412,7 @@ export function SiteHeader({ onGoHome, currentPage }: ChromeProps = {}) {
 
         <nav className="site-header-center mega-nav-desktop" aria-label="Sections">
           <ExploreMegaMenu current={currentPage === "explore"} />
-          <a
-            className={`mega-nav-trigger mega-nav-link${currentPage === "mission" ? " mega-nav-trigger-current" : ""}`}
-            href="/mission"
-            {...(currentPage === "mission" ? { "aria-current": "page" as const } : {})}
-          >
-            Mission
-          </a>
+          <MissionMegaMenu current={currentPage === "mission"} />
           <ImpactMegaMenu current={currentPage === "impact"} />
           <AboutMegaMenu
             current={
